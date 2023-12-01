@@ -1,0 +1,23 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container ">
+    <h1>All Products </h1>
+    <div class="row">
+        {% for product in products %}
+        <div class="col-sm">
+            <div class="card" style="width: 18rem;">
+                <img src="{% static 'images/'%}{{ product.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">{{ product.name }}</h5>
+                  <p>Price: Rs:{{ product.price }}/=</p>
+                  <p class="card-text">{{ product.description }}</p>
+                  <a href="{% url 'add_to_cart' product.id %}" class="btn btn-secondary">Add to Cart</a>
+                </div>
+              </div>
+          </div>
+        {% endfor %}
+   
+  </div>
+{% endblock %}
