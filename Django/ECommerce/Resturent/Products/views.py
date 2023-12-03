@@ -1,6 +1,7 @@
 from django.shortcuts import render,get_object_or_404, redirect
 from django.http import HttpResponse
 from . import models
+from django.contrib.auth.decorators import login_required
 
 def hello_function(request):
     return HttpResponse("Hello, this is your app!")
@@ -10,6 +11,7 @@ def home(request):
      return render(request, 'products.html',{'products': products})
  
 
+@login_required(login_url='/admin/login')
 def add_to_cart(request, product_id):
     
     product = get_object_or_404(models.Product, id=product_id)
@@ -28,6 +30,7 @@ def add_to_cart(request, product_id):
 
     return redirect('/viewcart')
 
+@login_required(login_url='/admin/login/')
 def remove_from_cart(request, product_id):
     
     product = get_object_or_404(models.Product, id=product_id)
@@ -48,7 +51,7 @@ def remove_from_cart(request, product_id):
 
     return redirect('/viewcart')
 
-
+@login_required(login_url='/admin/login/')
 def view_cart(request):
     cart_items = models.CartItem.objects.filter(user=request.user)
       # Calculate subtotal for each cart item and total for all items
